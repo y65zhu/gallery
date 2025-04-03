@@ -84,6 +84,29 @@
       padding: 10px 20px;
       border-radius: 10px;
     }
+    
+    .gallery-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-slider img {
+  height: 260px;
+  border-radius: 10px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.gallery-slider img:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
 
     footer {
       background-color: black;
@@ -149,6 +172,25 @@
     <div class="gallery-banner">
       <h2>Gallery</h2>
     </div>
+    <div class="gallery-slider">
+  <img src="Screenshot 2025-04-02 at 21.43.27.png" alt="Gallery Image 1">
+  <img src="Screenshot 2025-04-02 at 21.43.49.png
+" alt="Gallery Image 2">
+  <img src="Screenshot 2025-04-02 at 21.44.13.png" alt="Gallery Image 3">
+  <img src="
+Screenshot 2025-04-02 at 21.45.19.png" alt="Gallery Image 4">
+  <img src="Screenshot 2025-04-02 at 22.22.58.png" alt="Gallery Image 5">
+  <img src="Screenshot 2024-11-05 at 16.20.22.png" alt="Gallery Image 8">
+  <img src="Screenshot 2025-04-02 at 21.43.49.png
+" alt="Gallery Image 7">
+  <img src="Screenshot 2024-11-05 at 16.12.02.png" alt="Gallery Image 1">
+  <img src="Screenshot 2025-04-02 at 22.32.54.png" alt="Gallery Image 6">
+  <img src="Screenshot 2024-11-05 at 16.20.54.png" alt="Gallery Image 1">
+  <img src="入驻cover (1).png
+" alt="Gallery Image 9">
+  <!-- Add more as needed -->
+</div>
+
   </main>
 
   <!-- Footer -->
