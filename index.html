@@ -65,17 +65,24 @@
       text-align: center;
     }
 
-    h2 {
-      font-size: 3em;
+    .gallery-banner {
+      background-image: url('WechatIMG943.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
       margin-bottom: 40px;
-      font-weight: bold;
-      color: #ffcccc;
     }
 
-    .gallery-image {
-      max-width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    .gallery-banner h2 {
+      color: white;
+      font-size: 3em;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 10px;
     }
 
     footer {
@@ -139,8 +146,9 @@
 
   <!-- Main Content -->
   <main>
-    <h2>Gallery</h2>
-    <img src="WechatIMG943.jpg" alt="Cherry Blossoms Above Glass Roof" class="gallery-image" />
+    <div class="gallery-banner">
+      <h2>Gallery</h2>
+    </div>
   </main>
 
   <!-- Footer -->
