@@ -1,227 +1,751 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Gallery - Annora Zhu</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: black;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+  <head>
+    <meta charset="UTF-8">
+    <title>Annora Zhu Portfolio – Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --ink: #0a0a0a;
+        --paper: #f5f0e8;
+        --gold: #c9a84c;
+        --gold-light: #e8cc80;
+        --text-muted: #888070;
+        --border: rgba(201,168,76,0.25);
+      }
 
-    header {
-      background-color: black;
-      padding: 20px;
-    }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
 
-    header nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+      body {
+        font-family: 'DM Mono', monospace;
+        background: var(--ink);
+        color: var(--paper);
+        overflow-x: hidden;
+        cursor: none;
+      }
 
-    header nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
+      /* Cursor */
+      .cursor {
+        position: fixed;
+        width: 8px; height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px; height: 36px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: all 0.25s ease;
+        opacity: 0.6;
+      }
+      .cursor-ring.expand {
+        width: 80px; height: 80px;
+        opacity: 0.4;
+      }
 
-    header nav ul li {
-      margin-right: 20px;
-    }
+      /* Noise */
+      body::before {
+        content: '';
+        position: fixed; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9990;
+        opacity: 0.4;
+      }
 
-    header nav ul li a {
-      text-decoration: none;
-      color: #FFFFFF;
-      font-weight: bold;
-    }
+      /* ── HEADER ── */
+      header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        padding: 20px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.4s, background 0.4s;
+      }
+      header.scrolled {
+        background: rgba(10,10,10,0.85);
+        backdrop-filter: blur(12px);
+        border-color: var(--border);
+      }
+      .nav-logo {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem;
+        font-weight: 300;
+        letter-spacing: 0.3em;
+        color: var(--paper);
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+      .nav-logo span { color: var(--gold); }
+      nav ul { list-style: none; display: flex; gap: 36px; }
+      nav ul li a {
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-decoration: none;
+        position: relative;
+        transition: color 0.3s;
+      }
+      nav ul li a::after {
+        content: '';
+        position: absolute;
+        bottom: -3px; left: 0;
+        width: 0; height: 1px;
+        background: var(--gold);
+        transition: width 0.3s ease;
+      }
+      nav ul li a:hover, nav ul li a.active { color: var(--gold); }
+      nav ul li a:hover::after, nav ul li a.active::after { width: 100%; }
+      .nav-socials { display: flex; gap: 16px; }
+      .nav-socials a {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        transition: color 0.3s;
+      }
+      .nav-socials a:hover { color: var(--gold); }
 
-    header nav ul li a:hover {
-      color: #007BFF;
-    }
+      /* ── PAGE HERO ── */
+      .page-hero {
+        padding: 160px 80px 80px;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+      }
+      .page-hero::before {
+        content: '';
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 80px 80px;
+        pointer-events: none;
+      }
+      .page-hero-tag {
+        font-size: 0.62rem;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.3s;
+      }
+      .page-hero h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(4rem, 8vw, 8rem);
+        font-weight: 300;
+        line-height: 0.9;
+        color: var(--paper);
+        opacity: 0;
+        animation: fadeUp 1s ease forwards 0.5s;
+      }
+      .page-hero h1 em { font-style: italic; color: var(--gold); }
+      .page-hero-sub {
+        margin-top: 28px;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.8s;
+      }
+      .hero-count {
+        position: absolute;
+        bottom: 40px; right: 80px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 5rem;
+        font-weight: 300;
+        color: rgba(201,168,76,0.08);
+        line-height: 1;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards 1s;
+      }
 
-    header h1 {
-      color: white;
-      margin: 0;
-      font-size: 2em;
-    }
+      /* ── MARQUEE ── */
+      .marquee-bar {
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        background: var(--ink);
+        overflow: hidden;
+        padding: 14px 0;
+        white-space: nowrap;
+      }
+      .marquee-inner {
+        display: inline-flex;
+        animation: marquee 28s linear infinite;
+      }
+      .marquee-inner span {
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0 40px;
+      }
+      .marquee-inner span.accent { color: var(--gold); }
 
-    .social-icons a {
-      text-decoration: none;
-      margin-left: 10px;
-      font-size: 1.2em;
-    }
+      /* ── MAIN ── */
+      main { padding: 0 80px 120px; }
 
-    main {
-      flex: 1;
-      padding: 60px 40px;
-      text-align: center;
-    }
+      .section-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin: 80px 0 40px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .section-label.visible { opacity: 1; transform: none; }
+      .section-label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
 
-    .gallery-banner {
-      background-image: url('WechatIMG943.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      margin-bottom: 40px;
-    }
+      /* ── VIDEO REEL ── */
+      .reel-wrap {
+        position: relative;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.9s ease, transform 0.9s ease;
+      }
+      .reel-wrap.visible { opacity: 1; transform: none; }
+      .reel-wrap video { width: 100%; display: block; }
+      .reel-label {
+        position: absolute;
+        bottom: 20px; left: 28px;
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(245,240,232,0.6);
+      }
+      .reel-label span { color: var(--gold); margin-right: 12px; }
 
-    .gallery-banner h2 {
-      color: white;
-      font-size: 3em;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 10px;
-    }
-    
-    .gallery-slider {
-      display: flex;
-      overflow-x: auto;
-      gap: 20px;
-      padding: 20px 0;
-      scroll-snap-type: x mandatory;
-    }
+      /* ── POSTER SLIDER ── */
+      .slider-wrap {
+        position: relative;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+      .slider-wrap.visible { opacity: 1; transform: none; }
 
-    .gallery-slider img {
-      height: 260px;
-      border-radius: 10px;
-      scroll-snap-align: start;
-      flex-shrink: 0;
-      transition: transform 0.3s ease;
-    }
+      .gallery-slider {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 16px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gold) transparent;
+      }
+      .gallery-slider::-webkit-scrollbar { height: 2px; }
+      .gallery-slider::-webkit-scrollbar-track { background: transparent; }
+      .gallery-slider::-webkit-scrollbar-thumb { background: var(--gold); }
 
-    .gallery-slider img:hover {
-      transform: scale(1.05);
-      cursor: pointer;
-    }
+      .gallery-slider .slide {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        transition: border-color 0.3s;
+      }
+      .gallery-slider .slide:hover { border-color: var(--gold); }
 
-    footer {
-      background-color: black;
-      padding: 20px;
-      text-align: center;
-    }
+      .gallery-slider .slide img {
+        height: 340px;
+        width: auto;
+        display: block;
+        object-fit: cover;
+        transition: transform 0.6s ease, filter 0.4s ease;
+        filter: brightness(0.92) contrast(1.05);
+      }
+      .gallery-slider .slide:hover img {
+        transform: scale(1.04);
+        filter: brightness(1) contrast(1.05);
+      }
 
-    footer nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: inline-flex;
-    }
+      /* Overlay on hover */
+      .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10,10,10,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .gallery-slider .slide:hover .slide-overlay { opacity: 1; }
+      .slide-overlay span {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid var(--gold);
+        padding: 8px 20px;
+      }
 
-    footer nav ul li {
-      margin: 0 30px;
-    }
+      /* scroll hint */
+      .scroll-hint {
+        margin-top: 10px;
+        font-size: 0.55rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
 
-    footer nav ul li a {
-      text-decoration: none;
-      color: #FFFFFF;
-    }
+      /* ── LIGHTBOX ── */
+      .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10,10,10,0.96);
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .lightbox.active { display: flex; }
+      .lightbox img {
+        max-width: 90vw;
+        max-height: 85vh;
+        object-fit: contain;
+        border: 1px solid var(--border);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 32px; right: 48px;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        cursor: none;
+        transition: color 0.3s;
+      }
+      .lightbox-close:hover { color: var(--gold); }
+      .lightbox-nav {
+        display: flex;
+        gap: 32px;
+        margin-top: 20px;
+      }
+      .lightbox-nav button {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 8px 24px;
+        cursor: none;
+        transition: all 0.3s;
+      }
+      .lightbox-nav button:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .lightbox-counter {
+        margin-top: 12px;
+        font-size: 0.55rem;
+        letter-spacing: 0.2em;
+        color: var(--text-muted);
+      }
 
-    footer nav ul li a:hover {
-      color: #007BFF;
-    }
+      /* ── FOOTER ── */
+      footer {
+        padding: 60px 80px;
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 40px;
+      }
+      .footer-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2rem;
+        font-weight: 300;
+        color: var(--paper);
+      }
+      .footer-name em { font-style: italic; color: var(--gold); }
+      .footer-nav ul {
+        list-style: none;
+        display: flex;
+        gap: 28px;
+        justify-content: center;
+      }
+      .footer-nav ul li a {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .footer-nav ul li a:hover { color: var(--gold); }
+      .footer-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+      }
+      .footer-socials { display: flex; gap: 16px; }
+      .footer-socials a {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .footer-socials a:hover { color: var(--gold); }
+      .footer-credit {
+        font-size: 0.55rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(136,112,112,0.4);
+      }
 
-    footer p {
-      margin: 10px 0;
-      font-size: 0.9em;
-      color: #FFFFFF;
-    }
+      /* ── ANIMATIONS ── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+    </style>
+  </head>
+  <body>
 
-    footer .social-icons a {
-      text-decoration: none;
-      margin: 0 5px;
-      font-size: 1.2em;
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="https://y65zhu.github.io/Personal-Website-Design/">HOME</a></li>
-        <li><a href="https://y65zhu.github.io/ProjectsPage/">PROJECTS</a></li>
-        <li><a href="https://y65zhu.github.io/gallery/">GALLERY</a></li>
-        <li><a href="https://y65zhu.github.io/contact/">CONTACT</a></li>
-      </ul>
-      <h1>Annora Zhu Portfolio</h1>
-      <div class="social-icons">
-        <a href="https://www.linkedin.com/in/annora-zhu-1355352b9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">📘</a>
-        <a href="https://www.instagram.com/zz_annora?igsh=Z25raTdkdGxoYXlj&utm_source=qr">📸</a>
-        <a href="mailto:y65zhu@uwaterloo.ca">✉️</a>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-close" id="lightboxClose">✕ Close</div>
+      <img id="lightboxImg" src="" alt="">
+      <div class="lightbox-nav">
+        <button id="lightboxPrev">← Prev</button>
+        <button id="lightboxNext">Next →</button>
       </div>
-    </nav>
-  </header>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
 
-  <!-- Main Content -->
-  <main>
-   <video width="100%" controls autoplay muted loop style="border-radius: 12px; margin-bottom: 30px;">
-  <source src="gallery video.mov
-" type="video/mp4">
-</video>
-    </div>
-    <br>
-    <div><p style="text-align:Left">Poster Desigh</p></div>
-    <div class="gallery-slider">
-      <img src="Screenshot 2025-06-10 at 22.54.57.png" alt="Gallery Image 1">
-      <img src="Screenshot 2024-11-05 at 16.20.22.png" alt="Gallery Image 9">
-      <img src="Screenshot 2024-11-05 at 16.20.54.png" alt="Gallery Image 10">
-      <img src="Screenshot 2024-11-12 at 09.49.03.png" alt="Gallery Image 1">
-      <img src="Screenshot 2024-11-12 at 09.48.32.png" alt="Gallery Image 1">
-      <img src="Screenshot 2024-11-12 at 09.48.16.png" alt="Gallery Image 1">
-      <img src="Screenshot 2025-04-02 at 21.43.27.png" alt="Gallery Image 1">
-      <img src="Screenshot 2025-04-02 at 21.43.49.png" alt="Gallery Image 2">
-      <img src="Screenshot 2025-04-02 at 21.44.13.png" alt="Gallery Image 3">
-      <img src="Screenshot 2025-04-02 at 21.45.19.png" alt="Gallery Image 4">
-      <img src="Screenshot 2025-04-02 at 22.22.58.png" alt="Gallery Image 5">
-      <img src="Screenshot 2024-11-05 at 16.12.02.png" alt="Gallery Image 6">
-      <img src="Screenshot 2025-04-02 at 22.56.15.png" alt="Gallery Image 7">
-      <img src="入驻cover (1).png" alt="Gallery Image 11">
-    </div>
-    <br>
-    <div><p style="text-align:Left">Photography</p></div>
-    <div class="gallery-slider">
-      <img src="09.jpg" alt="Hallway Light Shadows">
-      <img src="WechatIMG712.jpg" alt="Hallway Light Shadows">
-      <img src="WechatIMG732.jpg" alt="Hallway Light Shadows">
-      <img src="WechatIMG720.jpg" alt="Hallway Light Shadows">
-      <img src="WechatIMG731.jpg" alt="Hallway Light Shadows">
-      <img src="01.jpg" alt="Hallway Light Shadows">
-      <img src="02.jpg" alt="Smartwatch Close-up">
-      <img src="03.jpg" alt="Winter Street Portrait">
-      <img src="04.jpg" alt="Coca-Cola Macro Shot">
-      <img src="06.jpg" alt="Donuts at Tim Hortons">
-      <img src="07.jpg" alt="Moving City Bus at Night">
-      <img src="10.jpg" alt="Temple with Golden Trees">
-    </div>
-  </main>
+    <!-- HEADER -->
+    <header id="header">
+      <a class="nav-logo" href="https://y65zhu.github.io/Personal-Website-Design/">Annora <span>Zhu</span></a>
+      <nav>
+        <ul>
+          <li><a href="https://y65zhu.github.io/Personal-Website-Design/">Home</a></li>
+          <li><a href="https://y65zhu.github.io/ProjectsPage/">Projects</a></li>
+          <li><a href="https://y65zhu.github.io/gallery/" class="active">Gallery</a></li>
+          <li><a href="https://y65zhu.github.io/contact/">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-socials">
+        <a href="https://www.linkedin.com/in/annora-zhu-1355352b9" target="_blank">LinkedIn</a>
+        <a href="https://www.instagram.com/zz_annora" target="_blank">Instagram</a>
+        <a href="mailto:y65zhu@uwaterloo.ca">Email</a>
+      </div>
+    </header>
 
-  <!-- Footer -->
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="https://y65zhu.github.io/Personal-Website-Design/">HOME</a></li>
-        <li><a href="https://y65zhu.github.io/ProjectsPage/">PROJECTS</a></li>
-        <li><a href="https://y65zhu.github.io/gallery/">GALLERY</a></li>
-      </ul>
-    </nav>
-    <p>Hand-coded by Annora Zhu</p>
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/in/annora-zhu-1355352b9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">📘</a>
-      <a href="https://www.instagram.com/zz_annora?igsh=Z25raTdkdGxoYXlj&utm_source=qr" target="_blank">📸</a>
-      <a href="mailto:y65zhu@uwaterloo.ca">✉️</a>
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <p class="page-hero-tag">Visual Archive · 2022–2025</p>
+      <h1>The <em>Gallery</em></h1>
+      <p class="page-hero-sub">Poster Design · Photography · Film</p>
+      <div class="hero-count">26</div>
     </div>
-  </footer>
-</body>
+
+    <!-- MARQUEE -->
+    <div class="marquee-bar">
+      <div class="marquee-inner">
+        <span>Poster Design</span><span class="accent">✦</span>
+        <span>Commercial Photography</span><span class="accent">✦</span>
+        <span>Portrait</span><span class="accent">✦</span>
+        <span>Editorial</span><span class="accent">✦</span>
+        <span>Brand Identity</span><span class="accent">✦</span>
+        <span>Street Photography</span><span class="accent">✦</span>
+        <span>Product Shots</span><span class="accent">✦</span>
+        <span>Poster Design</span><span class="accent">✦</span>
+        <span>Commercial Photography</span><span class="accent">✦</span>
+        <span>Portrait</span><span class="accent">✦</span>
+        <span>Editorial</span><span class="accent">✦</span>
+        <span>Brand Identity</span><span class="accent">✦</span>
+        <span>Street Photography</span><span class="accent">✦</span>
+        <span>Product Shots</span><span class="accent">✦</span>
+      </div>
+    </div>
+
+    <main>
+
+      <!-- VIDEO REEL -->
+      <div class="section-label" id="label-reel">00 — Featured Reel</div>
+      <div class="reel-wrap" id="reel-wrap">
+        <video autoplay muted loop playsinline controls>
+          <source src="gallery video.mov" type="video/mp4">
+        </video>
+        <div class="reel-label"><span>✦</span>Gallery Reel · 2025</div>
+      </div>
+
+      <!-- POSTER DESIGN -->
+      <div class="section-label" id="label-poster">01 — Poster Design</div>
+      <div class="slider-wrap" id="slider-poster">
+        <div class="gallery-slider" id="posterSlider">
+          <div class="slide" data-gallery="poster" data-index="0">
+            <img src="Screenshot 2025-06-10 at 22.54.57.png" alt="Poster 1">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="1">
+            <img src="Screenshot 2024-11-05 at 16.20.22.png" alt="Poster 2">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="2">
+            <img src="Screenshot 2024-11-05 at 16.20.54.png" alt="Poster 3">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="3">
+            <img src="Screenshot 2024-11-12 at 09.49.03.png" alt="Poster 4">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="4">
+            <img src="Screenshot 2024-11-12 at 09.48.32.png" alt="Poster 5">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="5">
+            <img src="Screenshot 2024-11-12 at 09.48.16.png" alt="Poster 6">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="6">
+            <img src="Screenshot 2025-04-02 at 21.43.27.png" alt="Poster 7">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="7">
+            <img src="Screenshot 2025-04-02 at 21.43.49.png" alt="Poster 8">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="8">
+            <img src="Screenshot 2025-04-02 at 21.44.13.png" alt="Poster 9">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="9">
+            <img src="Screenshot 2025-04-02 at 21.45.19.png" alt="Poster 10">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="10">
+            <img src="Screenshot 2025-04-02 at 22.22.58.png" alt="Poster 11">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="11">
+            <img src="Screenshot 2024-11-05 at 16.12.02.png" alt="Poster 12">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="12">
+            <img src="Screenshot 2025-04-02 at 22.56.15.png" alt="Poster 13">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="13">
+            <img src="入驻cover (1).png" alt="Poster 14">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+        </div>
+        <div class="scroll-hint">← Drag or scroll to browse →</div>
+      </div>
+
+      <!-- PHOTOGRAPHY -->
+      <div class="section-label" id="label-photo">02 — Photography</div>
+      <div class="slider-wrap" id="slider-photo">
+        <div class="gallery-slider" id="photoSlider">
+          <div class="slide" data-gallery="photo" data-index="0">
+            <img src="09.jpg" alt="Hallway Light Shadows">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="1">
+            <img src="WechatIMG712.jpg" alt="Photo 2">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="2">
+            <img src="WechatIMG732.jpg" alt="Photo 3">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="3">
+            <img src="WechatIMG720.jpg" alt="Photo 4">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="4">
+            <img src="WechatIMG731.jpg" alt="Photo 5">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="5">
+            <img src="01.jpg" alt="Photo 6">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="6">
+            <img src="02.jpg" alt="Smartwatch Close-up">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="7">
+            <img src="03.jpg" alt="Winter Street Portrait">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="8">
+            <img src="04.jpg" alt="Coca-Cola Macro Shot">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="9">
+            <img src="06.jpg" alt="Donuts at Tim Hortons">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="10">
+            <img src="07.jpg" alt="Moving City Bus at Night">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="photo" data-index="11">
+            <img src="10.jpg" alt="Temple with Golden Trees">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+        </div>
+        <div class="scroll-hint">← Drag or scroll to browse →</div>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-name">Annora <em>Zhu</em></div>
+      <div class="footer-nav">
+        <ul>
+          <li><a href="https://y65zhu.github.io/Personal-Website-Design/">Home</a></li>
+          <li><a href="https://y65zhu.github.io/ProjectsPage/">Projects</a></li>
+          <li><a href="https://y65zhu.github.io/gallery/">Gallery</a></li>
+          <li><a href="https://y65zhu.github.io/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-right">
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/in/annora-zhu-1355352b9" target="_blank">LinkedIn</a>
+          <a href="https://www.instagram.com/zz_annora" target="_blank">Instagram</a>
+          <a href="mailto:y65zhu@uwaterloo.ca">Email</a>
+        </div>
+        <div class="footer-credit">Hand-coded by Annora Zhu</div>
+      </div>
+    </footer>
+
+    <script>
+      // Custom cursor
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursorRing');
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button, .slide').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('expand'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
+      });
+
+      // Header scroll
+      const header = document.getElementById('header');
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 40);
+      });
+
+      // Scroll reveal
+      const revealEls = [
+        document.getElementById('label-reel'),
+        document.getElementById('reel-wrap'),
+        document.getElementById('label-poster'),
+        document.getElementById('slider-poster'),
+        document.getElementById('label-photo'),
+        document.getElementById('slider-photo'),
+      ];
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      revealEls.forEach(el => el && obs.observe(el));
+
+      // Lightbox
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxCounter = document.getElementById('lightboxCounter');
+
+      const galleries = { poster: [], photo: [] };
+      document.querySelectorAll('.slide').forEach(slide => {
+        const g = slide.dataset.gallery;
+        const src = slide.querySelector('img').src;
+        if (!galleries[g]) galleries[g] = [];
+        galleries[g].push(src);
+      });
+
+      let currentGallery = null;
+      let currentIndex = 0;
+
+      function openLightbox(gallery, index) {
+        currentGallery = gallery;
+        currentIndex = index;
+        lightboxImg.src = galleries[gallery][index];
+        lightboxCounter.textContent = `${index + 1} / ${galleries[gallery].length}`;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      function navigate(dir) {
+        const len = galleries[currentGallery].length;
+        currentIndex = (currentIndex + dir + len) % len;
+        lightboxImg.src = galleries[currentGallery][currentIndex];
+        lightboxCounter.textContent = `${currentIndex + 1} / ${len}`;
+      }
+
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.addEventListener('click', () => {
+          openLightbox(slide.dataset.gallery, parseInt(slide.dataset.index));
+        });
+      });
+      document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+      document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
+      document.getElementById('lightboxNext').addEventListener('click', () => navigate(1));
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') navigate(-1);
+        if (e.key === 'ArrowRight') navigate(1);
+      });
+    </script>
+  </body>
 </html>
