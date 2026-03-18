@@ -47,10 +47,7 @@
         transition: all 0.25s ease;
         opacity: 0.6;
       }
-      .cursor-ring.expand {
-        width: 80px; height: 80px;
-        opacity: 0.4;
-      }
+      .cursor-ring.expand { width: 80px; height: 80px; opacity: 0.4; }
 
       /* Noise */
       body::before {
@@ -221,28 +218,7 @@
         background: var(--border);
       }
 
-      /* ── VIDEO REEL ── */
-      .reel-wrap {
-        position: relative;
-        border: 1px solid var(--border);
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.9s ease, transform 0.9s ease;
-      }
-      .reel-wrap.visible { opacity: 1; transform: none; }
-      .reel-wrap video { width: 100%; display: block; }
-      .reel-label {
-        position: absolute;
-        bottom: 20px; left: 28px;
-        font-size: 0.58rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(245,240,232,0.6);
-      }
-      .reel-label span { color: var(--gold); margin-right: 12px; }
-
-      /* ── POSTER SLIDER ── */
+      /* ── SLIDERS ── */
       .slider-wrap {
         position: relative;
         opacity: 0;
@@ -287,7 +263,6 @@
         filter: brightness(1) contrast(1.05);
       }
 
-      /* Overlay on hover */
       .slide-overlay {
         position: absolute;
         inset: 0;
@@ -308,7 +283,6 @@
         padding: 8px 20px;
       }
 
-      /* scroll hint */
       .scroll-hint {
         margin-top: 10px;
         font-size: 0.55rem;
@@ -346,11 +320,7 @@
         transition: color 0.3s;
       }
       .lightbox-close:hover { color: var(--gold); }
-      .lightbox-nav {
-        display: flex;
-        gap: 32px;
-        margin-top: 20px;
-      }
+      .lightbox-nav { display: flex; gap: 32px; margin-top: 20px; }
       .lightbox-nav button {
         background: none;
         border: 1px solid var(--border);
@@ -363,10 +333,7 @@
         cursor: none;
         transition: all 0.3s;
       }
-      .lightbox-nav button:hover {
-        border-color: var(--gold);
-        color: var(--gold);
-      }
+      .lightbox-nav button:hover { border-color: var(--gold); color: var(--gold); }
       .lightbox-counter {
         margin-top: 12px;
         font-size: 0.55rem;
@@ -383,19 +350,9 @@
         align-items: center;
         gap: 40px;
       }
-      .footer-name {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2rem;
-        font-weight: 300;
-        color: var(--paper);
-      }
+      .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--paper); }
       .footer-name em { font-style: italic; color: var(--gold); }
-      .footer-nav ul {
-        list-style: none;
-        display: flex;
-        gap: 28px;
-        justify-content: center;
-      }
+      .footer-nav ul { list-style: none; display: flex; gap: 28px; justify-content: center; }
       .footer-nav ul li a {
         font-size: 0.6rem;
         letter-spacing: 0.2em;
@@ -405,12 +362,7 @@
         transition: color 0.3s;
       }
       .footer-nav ul li a:hover { color: var(--gold); }
-      .footer-right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 12px;
-      }
+      .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
       .footer-socials { display: flex; gap: 16px; }
       .footer-socials a {
         font-size: 0.6rem;
@@ -421,12 +373,7 @@
         transition: color 0.3s;
       }
       .footer-socials a:hover { color: var(--gold); }
-      .footer-credit {
-        font-size: 0.55rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(136,112,112,0.4);
-      }
+      .footer-credit { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(136,112,112,0.4); }
 
       /* ── ANIMATIONS ── */
       @keyframes fadeUp {
@@ -482,7 +429,7 @@
       <p class="page-hero-tag">Visual Archive · 2022–2025</p>
       <h1>The <em>Gallery</em></h1>
       <p class="page-hero-sub">Poster Design · Photography · Film</p>
-      <div class="hero-count">26</div>
+      <div class="hero-count">27</div>
     </div>
 
     <!-- MARQUEE -->
@@ -507,83 +454,81 @@
 
     <main>
 
-      <!-- VIDEO REEL -->
-      <div class="section-label" id="label-reel">00 — Featured Reel</div>
-      <div class="reel-wrap" id="reel-wrap">
-        <video autoplay muted loop playsinline controls>
-          <source src="gallery video.mov" type="video/mp4">
-        </video>
-        <div class="reel-label"><span>✦</span>Gallery Reel · 2025</div>
-      </div>
-
-      <!-- POSTER DESIGN -->
+      <!-- ── 01 POSTER DESIGN ── -->
       <div class="section-label" id="label-poster">01 — Poster Design</div>
       <div class="slider-wrap" id="slider-poster">
         <div class="gallery-slider" id="posterSlider">
+
           <div class="slide" data-gallery="poster" data-index="0">
-            <img src="Screenshot 2025-06-10 at 22.54.57.png" alt="Poster 1">
+            <img src="Group9_Poster.png" alt="Student Housing Crisis Analysis Poster">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="1">
-            <img src="Screenshot 2024-11-05 at 16.20.22.png" alt="Poster 2">
+            <img src="Screenshot 2025-06-10 at 22.54.57.png" alt="Poster 1">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="2">
-            <img src="Screenshot 2024-11-05 at 16.20.54.png" alt="Poster 3">
+            <img src="Screenshot 2024-11-05 at 16.20.22.png" alt="Poster 2">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="3">
-            <img src="Screenshot 2024-11-12 at 09.49.03.png" alt="Poster 4">
+            <img src="Screenshot 2024-11-05 at 16.20.54.png" alt="Poster 3">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="4">
-            <img src="Screenshot 2024-11-12 at 09.48.32.png" alt="Poster 5">
+            <img src="Screenshot 2024-11-12 at 09.49.03.png" alt="Poster 4">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="5">
-            <img src="Screenshot 2024-11-12 at 09.48.16.png" alt="Poster 6">
+            <img src="Screenshot 2024-11-12 at 09.48.32.png" alt="Poster 5">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="6">
-            <img src="Screenshot 2025-04-02 at 21.43.27.png" alt="Poster 7">
+            <img src="Screenshot 2024-11-12 at 09.48.16.png" alt="Poster 6">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="7">
-            <img src="Screenshot 2025-04-02 at 21.43.49.png" alt="Poster 8">
+            <img src="Screenshot 2025-04-02 at 21.43.27.png" alt="Poster 7">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="8">
-            <img src="Screenshot 2025-04-02 at 21.44.13.png" alt="Poster 9">
+            <img src="Screenshot 2025-04-02 at 21.43.49.png" alt="Poster 8">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="9">
-            <img src="Screenshot 2025-04-02 at 21.45.19.png" alt="Poster 10">
+            <img src="Screenshot 2025-04-02 at 21.44.13.png" alt="Poster 9">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="10">
-            <img src="Screenshot 2025-04-02 at 22.22.58.png" alt="Poster 11">
+            <img src="Screenshot 2025-04-02 at 21.45.19.png" alt="Poster 10">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="11">
-            <img src="Screenshot 2024-11-05 at 16.12.02.png" alt="Poster 12">
+            <img src="Screenshot 2025-04-02 at 22.22.58.png" alt="Poster 11">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="12">
-            <img src="Screenshot 2025-04-02 at 22.56.15.png" alt="Poster 13">
+            <img src="Screenshot 2024-11-05 at 16.12.02.png" alt="Poster 12">
             <div class="slide-overlay"><span>View</span></div>
           </div>
           <div class="slide" data-gallery="poster" data-index="13">
+            <img src="Screenshot 2025-04-02 at 22.56.15.png" alt="Poster 13">
+            <div class="slide-overlay"><span>View</span></div>
+          </div>
+          <div class="slide" data-gallery="poster" data-index="14">
             <img src="入驻cover (1).png" alt="Poster 14">
             <div class="slide-overlay"><span>View</span></div>
           </div>
+
         </div>
         <div class="scroll-hint">← Drag or scroll to browse →</div>
       </div>
 
-      <!-- PHOTOGRAPHY -->
+      <!-- ── 02 PHOTOGRAPHY ── -->
       <div class="section-label" id="label-photo">02 — Photography</div>
       <div class="slider-wrap" id="slider-photo">
         <div class="gallery-slider" id="photoSlider">
+
           <div class="slide" data-gallery="photo" data-index="0">
             <img src="09.jpg" alt="Hallway Light Shadows">
             <div class="slide-overlay"><span>View</span></div>
@@ -632,6 +577,7 @@
             <img src="10.jpg" alt="Temple with Golden Trees">
             <div class="slide-overlay"><span>View</span></div>
           </div>
+
         </div>
         <div class="scroll-hint">← Drag or scroll to browse →</div>
       </div>
@@ -662,12 +608,12 @@
     <script>
       // Custom cursor
       const cursor = document.getElementById('cursor');
-      const ring = document.getElementById('cursorRing');
+      const ring   = document.getElementById('cursorRing');
       document.addEventListener('mousemove', e => {
         cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        ring.style.left = e.clientX + 'px';
-        ring.style.top = e.clientY + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        ring.style.left   = e.clientX + 'px';
+        ring.style.top    = e.clientY + 'px';
       });
       document.querySelectorAll('a, button, .slide').forEach(el => {
         el.addEventListener('mouseenter', () => ring.classList.add('expand'));
@@ -676,45 +622,39 @@
 
       // Header scroll
       const header = document.getElementById('header');
-      window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 40);
-      });
+      window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40));
 
       // Scroll reveal
       const revealEls = [
-        document.getElementById('label-reel'),
-        document.getElementById('reel-wrap'),
         document.getElementById('label-poster'),
         document.getElementById('slider-poster'),
         document.getElementById('label-photo'),
         document.getElementById('slider-photo'),
       ];
       const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-        });
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
       }, { threshold: 0.1 });
       revealEls.forEach(el => el && obs.observe(el));
 
       // Lightbox
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightboxImg');
+      const lightbox        = document.getElementById('lightbox');
+      const lightboxImg     = document.getElementById('lightboxImg');
       const lightboxCounter = document.getElementById('lightboxCounter');
 
       const galleries = { poster: [], photo: [] };
       document.querySelectorAll('.slide').forEach(slide => {
-        const g = slide.dataset.gallery;
+        const g   = slide.dataset.gallery;
         const src = slide.querySelector('img').src;
         if (!galleries[g]) galleries[g] = [];
         galleries[g].push(src);
       });
 
       let currentGallery = null;
-      let currentIndex = 0;
+      let currentIndex   = 0;
 
       function openLightbox(gallery, index) {
         currentGallery = gallery;
-        currentIndex = index;
+        currentIndex   = index;
         lightboxImg.src = galleries[gallery][index];
         lightboxCounter.textContent = `${index + 1} / ${galleries[gallery].length}`;
         lightbox.classList.add('active');
@@ -732,9 +672,7 @@
       }
 
       document.querySelectorAll('.slide').forEach(slide => {
-        slide.addEventListener('click', () => {
-          openLightbox(slide.dataset.gallery, parseInt(slide.dataset.index));
-        });
+        slide.addEventListener('click', () => openLightbox(slide.dataset.gallery, parseInt(slide.dataset.index)));
       });
       document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
       document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
@@ -742,9 +680,9 @@
       lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
       document.addEventListener('keydown', e => {
         if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') navigate(-1);
-        if (e.key === 'ArrowRight') navigate(1);
+        if (e.key === 'Escape')      closeLightbox();
+        if (e.key === 'ArrowLeft')   navigate(-1);
+        if (e.key === 'ArrowRight')  navigate(1);
       });
     </script>
   </body>
